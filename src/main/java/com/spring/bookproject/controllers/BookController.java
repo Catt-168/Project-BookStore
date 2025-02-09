@@ -33,6 +33,11 @@ public class BookController {
         return bookService.saveBook(bookDTO);
     }
 
+    @PutMapping("/{id}")
+    public Book updateBook(@PathVariable Long id, @RequestBody BookDTO bookDTO) {
+        return bookService.updateBook(id, bookDTO);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteBookById(@PathVariable Long id) {
          bookService.deleteBookById(id);
