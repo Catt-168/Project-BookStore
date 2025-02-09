@@ -41,12 +41,25 @@ public class BookService {
         return bookRepository.findById(id);
     }
 
-
     public Book saveBook(BookDTO bookDTO) {
         Author author = authorRepository.findById(bookDTO.getAuthor_id()).orElseThrow();
         Publisher publisher = publisherRepository.findById(bookDTO.getPublisher_id()).orElseThrow();
         List<Genre> genres = genreRepository.findAllById(bookDTO.getGenres_id());
         Book book = new Book();
+        saveBook(bookDTO, book, author, publisher, genres);
+        return book;
+    }
+
+    public Book updateBook(Long id,BookDTO bookDTO) {
+        Book book = bookRepository.findById(id).orElseThrow();
+        Author author = authorRepository.findById(bookDTO.getAuthor_id()).orElseThrow();
+        Publisher publisher = publisherRepository.findById(bookDTO.getPublisher_id()).orElseThrow();
+        List<Genre> genres = genreRepository.findAllById(bookDTO.getGenres_id());
+        saveBook(bookDTO, book, author, publisher, genres);
+        return book;
+    }
+
+    private void saveBook(BookDTO bookDTO, Book book, Author author, Publisher publisher, List<Genre> genres) {
         book.setTitle(bookDTO.getTitle());
         book.setDescription(bookDTO.getDescription());
         book.setIsbn(bookDTO.getIsbn());
@@ -59,7 +72,7 @@ public class BookService {
         book.setAuthor(author);
         book.setPublisher(publisher);
         book.setGenres(genres);
-        return bookRepository.save(book);
+        bookRepository.save(book);
     }
 
     public void deleteBookById(Long id) {
