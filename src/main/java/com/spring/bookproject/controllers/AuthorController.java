@@ -25,4 +25,9 @@ public class AuthorController {
     public Author addAuthor(@RequestBody Author author) {
         return authorService.saveAuthor(author);
     }
+
+    @DeleteMapping
+    public void deleteAuthors(){
+        authorService.deleteAllAuthors();
+    }
 }

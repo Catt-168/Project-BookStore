@@ -22,4 +22,8 @@ public class AuthorService {
     public Author saveAuthor(Author author) {
         return authorRepository.save(author);
     }
+
+    public void deleteAllAuthors() {
+        authorRepository.deleteAll();
+    }
 }
