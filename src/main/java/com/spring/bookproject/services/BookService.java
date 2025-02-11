@@ -1,6 +1,7 @@
 package com.spring.bookproject.services;
 
 import com.spring.bookproject.dto.BookDTO;
+import com.spring.bookproject.exception.AlreadyExistException;
 import com.spring.bookproject.models.Author;
 import com.spring.bookproject.models.Book;
 import com.spring.bookproject.models.Genre;
@@ -12,6 +13,7 @@ import com.spring.bookproject.repositories.PublisherRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.rmi.AlreadyBoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,16 +43,20 @@ public class BookService {
         return bookRepository.findById(id);
     }
 
-    public Book saveBook(BookDTO bookDTO) {
+    public Book createBook(BookDTO bookDTO) throws AlreadyExistException {
         Author author = authorRepository.findById(bookDTO.getAuthor_id()).orElseThrow();
         Publisher publisher = publisherRepository.findById(bookDTO.getPublisher_id()).orElseThrow();
         List<Genre> genres = genreRepository.findAllById(bookDTO.getGenres_id());
+        Boolean oldBook = bookRepository.existsByTitle(bookDTO.getTitle());
+        if(oldBook) {
+            throw new AlreadyExistException("A Book with title: " + bookDTO.getTitle() + " already exists.");
+        }
         Book book = new Book();
         saveBook(bookDTO, book, author, publisher, genres);
         return book;
     }
 
-    public Book updateBook(Long id,BookDTO bookDTO) {
+    public Book updateBook(Long id, BookDTO bookDTO) {
         Book book = bookRepository.findById(id).orElseThrow();
         Author author = authorRepository.findById(bookDTO.getAuthor_id()).orElseThrow();
         Publisher publisher = publisherRepository.findById(bookDTO.getPublisher_id()).orElseThrow();
