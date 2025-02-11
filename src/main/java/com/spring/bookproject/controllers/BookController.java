@@ -1,8 +1,11 @@
 package com.spring.bookproject.controllers;
 
 import com.spring.bookproject.dto.BookDTO;
+import com.spring.bookproject.exception.AlreadyExistException;
 import com.spring.bookproject.models.Book;
 import com.spring.bookproject.services.BookService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,8 +32,12 @@ public class BookController {
     }
 
     @PostMapping
-    public Book createBook(@RequestBody BookDTO bookDTO) {
-        return bookService.saveBook(bookDTO);
+    public ResponseEntity<?> createBook(@RequestBody BookDTO bookDTO) {
+        try {
+            return ResponseEntity.status(200).body(bookService.createBook(bookDTO));
+        } catch (AlreadyExistException e) {
+           return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")
