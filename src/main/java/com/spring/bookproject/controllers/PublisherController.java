@@ -1,9 +1,12 @@
 package com.spring.bookproject.controllers;
 
 import com.spring.bookproject.dto.PublisherDTO;
+import com.spring.bookproject.exception.AlreadyExistException;
 import com.spring.bookproject.models.Publisher;
 import com.spring.bookproject.services.PublisherService;
 import lombok.Data;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,8 +33,12 @@ public class PublisherController {
     }
 
     @PostMapping
-    public Publisher addPublisher(@RequestBody PublisherDTO publisherDTO) {
-        return publisherService.createPublisher(publisherDTO);
+    public ResponseEntity<?> addPublisher(@RequestBody PublisherDTO publisherDTO) {
+        try {
+            return  ResponseEntity.status(200).body(publisherService.createPublisher(publisherDTO));
+        } catch (AlreadyExistException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")
