@@ -1,6 +1,7 @@
 package com.spring.bookproject.services;
 
 import com.spring.bookproject.dto.GenreDTO;
+import com.spring.bookproject.exception.AlreadyExistException;
 import com.spring.bookproject.models.Book;
 import com.spring.bookproject.models.Genre;
 import com.spring.bookproject.repositories.BookRepository;
@@ -31,6 +32,10 @@ public class GenreService {
 
     public Genre craeteGenre(GenreDTO genreDTO) {
         List<Book> books = bookRepository.findAllById(genreDTO.getBook_id());
+        boolean oldGenre = genreRepository.existsByName(genreDTO.getName());
+        if(oldGenre) {
+            throw new AlreadyExistException("Genre with name: " + genreDTO.getName() + " already exists.");
+        }
         Genre genre = new Genre();
         return saveGenre(genreDTO, genre, books);
     }

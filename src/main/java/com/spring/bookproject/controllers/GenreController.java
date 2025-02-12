@@ -1,9 +1,12 @@
 package com.spring.bookproject.controllers;
 
 import com.spring.bookproject.dto.GenreDTO;
+import com.spring.bookproject.exception.AlreadyExistException;
 import com.spring.bookproject.models.Genre;
 import com.spring.bookproject.services.GenreService;
 import lombok.Data;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,8 +33,12 @@ public class GenreController {
     }
 
     @PostMapping
-    public Genre addGenre(@RequestBody GenreDTO genreDTO) {
-        return genreService.craeteGenre(genreDTO);
+    public ResponseEntity<?> addGenre(@RequestBody GenreDTO genreDTO) {
+        try {
+            return  ResponseEntity.status(200).body(genreService.craeteGenre(genreDTO));
+        }catch( AlreadyExistException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")
