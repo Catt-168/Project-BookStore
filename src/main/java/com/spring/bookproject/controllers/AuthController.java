@@ -22,12 +22,17 @@ public class AuthController {
         return request.getRequestedSessionId();
     }
 
-    @PostMapping
-    public ResponseEntity<?> login(@RequestBody Users user) {
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody Users user) {
         try {
             return ResponseEntity.status(200).body(usersService.createUser(user));
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody Users user) {
+        return usersService.authenticate(user);
     }
 }
