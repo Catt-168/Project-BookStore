@@ -46,4 +46,7 @@ public class Book {
     @JsonIgnoreProperties("books")
     private Publisher publisher;
 
+    @ManyToMany(mappedBy = "books")
+    private List<Orders> orders;
+
 }

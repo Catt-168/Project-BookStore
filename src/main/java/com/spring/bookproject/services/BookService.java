@@ -88,4 +88,8 @@ public class BookService {
     public void deleteAllBooks() {
         bookRepository.deleteAll();
     }
+
+    public List<Book> fetchByGenre(Long genreId) {
+        return bookRepository.fetchBookByGenreId(genreId);
+    }
 }

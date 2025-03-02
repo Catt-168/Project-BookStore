@@ -3,7 +3,9 @@ package com.spring.bookproject.controllers;
 import com.spring.bookproject.dto.BookDTO;
 import com.spring.bookproject.exception.AlreadyExistException;
 import com.spring.bookproject.models.Book;
+import com.spring.bookproject.models.Orders;
 import com.spring.bookproject.services.BookService;
+import com.spring.bookproject.services.OrdersService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +18,12 @@ import java.util.Optional;
 public class BookController {
 
    private final BookService bookService;
+   private final OrdersService ordersService;
 
-    public BookController(BookService bookService) {
+    public BookController(BookService bookService,
+                          OrdersService ordersService) {
         this.bookService = bookService;
+        this.ordersService = ordersService;
     }
 
     @GetMapping
@@ -26,10 +31,17 @@ public class BookController {
         return bookService.getAllBooks();
     }
 
+    @GetMapping("/by-genre/{genreId}")
+    public List<Book> getBooksByGenre(@PathVariable Long genreId) {
+        return bookService.fetchByGenre(genreId);
+    }
+
     @GetMapping("/{id}")
     public Optional<Book> getBookById(@PathVariable Long id) {
         return bookService.fetchBookById(id);
     }
+
+
 
     @PostMapping
     public ResponseEntity<?> createBook(@RequestBody BookDTO bookDTO) {
