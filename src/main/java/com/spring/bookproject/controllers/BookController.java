@@ -31,10 +31,16 @@ public class BookController {
         return bookService.getAllBooks();
     }
 
+    @GetMapping("/by-genre/{genreId}")
+    public List<Book> getBooksByGenre(@PathVariable Long genreId) {
+        return bookService.fetchByGenre(genreId);
+    }
+
     @GetMapping("/{id}")
     public Optional<Book> getBookById(@PathVariable Long id) {
         return bookService.fetchBookById(id);
     }
+
 
 
     @PostMapping

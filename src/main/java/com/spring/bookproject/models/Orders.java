@@ -1,6 +1,7 @@
 package com.spring.bookproject.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.spring.bookproject.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -14,6 +15,9 @@ public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus = OrderStatus.PENDING;
 
     @ManyToMany
     @JoinTable(
@@ -29,5 +33,6 @@ public class Orders {
     private Customer customer;
 
     private Date orderDate;
+
 
 }

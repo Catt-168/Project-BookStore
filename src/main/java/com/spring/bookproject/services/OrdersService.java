@@ -1,6 +1,8 @@
 package com.spring.bookproject.services;
 
 import com.spring.bookproject.dto.OrdersDTO;
+import com.spring.bookproject.dto.OrdersUpdateDTO;
+import com.spring.bookproject.enums.OrderStatus;
 import com.spring.bookproject.models.Book;
 import com.spring.bookproject.models.Customer;
 import com.spring.bookproject.models.Orders;
@@ -44,6 +46,13 @@ public class OrdersService {
         order.setOrderDate(new Date());
         return ordersRepository.save(order);
     }
+
+    public Orders updateOrder(Long orderId, OrdersUpdateDTO ordersUpdateDTO) {
+        Orders order = ordersRepository.findById(orderId).orElseThrow();
+        order.setOrderStatus(ordersUpdateDTO.getStatus());
+        return ordersRepository.save(order);
+    }
+
 
     public void deleteOrderById(Long id) {
         ordersRepository.deleteById(id);

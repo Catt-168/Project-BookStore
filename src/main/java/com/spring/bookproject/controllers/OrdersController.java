@@ -1,6 +1,7 @@
 package com.spring.bookproject.controllers;
 
 import com.spring.bookproject.dto.OrdersDTO;
+import com.spring.bookproject.dto.OrdersUpdateDTO;
 import com.spring.bookproject.models.Orders;
 import com.spring.bookproject.services.OrdersService;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,11 @@ public class OrdersController {
     @PostMapping
     public Orders createOrder(@RequestBody OrdersDTO ordersDTO) {
         return ordersService.createOrder(ordersDTO);
+    }
+
+    @PutMapping("/{id}")
+    public Orders updateOrder(@PathVariable Long id, @RequestBody OrdersUpdateDTO ordersUpdateDTO) {
+        return ordersService.updateOrder(id, ordersUpdateDTO);
     }
 
     @DeleteMapping("/{id}")
