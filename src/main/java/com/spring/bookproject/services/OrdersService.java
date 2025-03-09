@@ -44,6 +44,7 @@ public class OrdersService {
         order.setCustomer(customer);
         order.setBooks(books);
         order.setOrderDate(new Date());
+        order.setTotalAmount(ordersDTO.getTotalAmount());
         return ordersRepository.save(order);
     }
 
@@ -58,5 +59,8 @@ public class OrdersService {
         ordersRepository.deleteById(id);
     }
 
+    public List<Orders> findOrdersByCustomerId(Long id) {
+        return ordersRepository.findByCustomerId(id);
+    }
 
 }
