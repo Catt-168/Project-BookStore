@@ -1,5 +1,6 @@
 package com.spring.bookproject.controllers;
 
+import com.spring.bookproject.dto.UsersDTO;
 import com.spring.bookproject.models.Users;
 import com.spring.bookproject.services.UsersService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody Users user) {
+    public ResponseEntity<?> register(@RequestBody UsersDTO user) {
         try {
             return ResponseEntity.status(200).body(usersService.createUser(user));
         } catch (RuntimeException e) {

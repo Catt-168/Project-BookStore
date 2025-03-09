@@ -9,5 +9,6 @@ import java.util.List;
 public class OrdersDTO {
     private Long customerId;
     private List<Long> book_id;
+    private Double totalAmount;
 
 }

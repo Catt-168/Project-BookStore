@@ -1,6 +1,7 @@
 package com.spring.bookproject.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,8 +17,17 @@ public class Customer {
     private Long id;
 
     private String customerName;
+    private String customerAddress;
+    private String customerPhone;
+    private boolean customerFistTime;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("customer")
     private List<Orders> orders = new ArrayList<>();
+
+//    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JsonIgnoreProperties("customer")
+//    private List<Genre> preferredGenres = new ArrayList<>();
+
+
 }

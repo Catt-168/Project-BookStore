@@ -28,6 +28,11 @@ public class OrdersController {
         return ordersService.getOrderById(id);
     }
 
+    @GetMapping("/byCustomer")
+    public List<Orders> getOrderByCustomerId(@RequestParam Long customerId) {
+        return ordersService.findOrdersByCustomerId(customerId);
+    }
+
     @PostMapping
     public Orders createOrder(@RequestBody OrdersDTO ordersDTO) {
         return ordersService.createOrder(ordersDTO);

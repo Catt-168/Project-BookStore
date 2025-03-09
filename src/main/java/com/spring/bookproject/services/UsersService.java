@@ -1,5 +1,6 @@
 package com.spring.bookproject.services;
 
+import com.spring.bookproject.dto.UsersDTO;
 import com.spring.bookproject.models.Customer;
 import com.spring.bookproject.models.Users;
 import com.spring.bookproject.repositories.CustomerRepository;
@@ -32,16 +33,20 @@ public class UsersService {
         this.customerRepository = customerRepository;
     }
 
-    public Users createUser(Users user) {
+    public Users createUser(UsersDTO user) {
         boolean isUserExist = usersRepository.existsByUsername(user.getUsername());
         if(isUserExist) {
             throw new IllegalArgumentException("User already exists");
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        Users newUser = new Users();
+        newUser.setUsername(user.getUsername());
+        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
         Customer customer = new Customer();
         customer.setCustomerName(user.getUsername());
+        customer.setCustomerPhone(user.getPhone());
+        customer.setCustomerAddress(user.getAddress());
         customerRepository.save(customer);
-        return usersRepository.save(user);
+        return usersRepository.save(newUser);
     }
 
     public String authenticate(Users user) {

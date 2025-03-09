@@ -19,6 +19,8 @@ public class Orders {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus = OrderStatus.PENDING;
 
+    private Double totalAmount;
+
     @ManyToMany
     @JoinTable(
             name = "order_books",
