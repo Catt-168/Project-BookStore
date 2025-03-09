@@ -1,6 +1,7 @@
 package com.spring.bookproject.controllers;
 
 import com.spring.bookproject.dto.BookDTO;
+import com.spring.bookproject.dto.BookEditorDTO;
 import com.spring.bookproject.exception.AlreadyExistException;
 import com.spring.bookproject.models.Book;
 import com.spring.bookproject.models.Orders;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/books")
@@ -41,9 +43,9 @@ public class BookController {
         return bookService.fetchBookById(id);
     }
 
-    @GetMapping("/editor-pick")
-    public void getBooksByEditorPick(@RequestBody List<Long> ids) {
-        System.out.println(ids);
+    @PostMapping("/editor-pick")
+    public Set<Book> getBooksByEditorPick(@RequestBody BookEditorDTO bookEditorDTO) {
+        return bookService.editorPick(bookEditorDTO.getGenre_id());
     }
 
 

@@ -15,4 +15,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     @Query("SELECT b FROM Book b JOIN b.genres g WHERE g.id = :genreId")
     List<Book> fetchBookByGenreId(@Param("genreId") Long genreId);
+
+
 }
