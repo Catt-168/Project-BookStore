@@ -62,5 +62,11 @@ public class CustomerService {
         return currentStatus;
     }
 
+    public void addPrefences(String username,String fav) {
+        Customer customer = findByUsername(username);
+        customer.setFavGenre(fav);
+        customerRepository.save(customer);
+
+    }
 
 }
