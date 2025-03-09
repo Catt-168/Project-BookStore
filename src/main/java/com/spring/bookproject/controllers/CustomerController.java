@@ -32,8 +32,7 @@ public class CustomerController {
     @GetMapping("/first")
     public boolean getFirstTimeLogin(@RequestParam String username) {
         System.out.println("First time login" + username);
-        return true;
-//        return customerService.getFistTimeLogin(username);
+        return customerService.getFistTimeLogin(username);
     }
 
     @GetMapping("/getCustomer")
