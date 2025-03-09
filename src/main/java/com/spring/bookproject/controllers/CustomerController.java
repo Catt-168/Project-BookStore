@@ -1,6 +1,7 @@
 package com.spring.bookproject.controllers;
 
 import com.spring.bookproject.dto.CustomerDTO;
+import com.spring.bookproject.dto.CustomerFavDTO;
 import com.spring.bookproject.dto.CustomerPreferncesDTO;
 import com.spring.bookproject.models.Customer;
 import com.spring.bookproject.services.CustomerService;
@@ -30,7 +31,9 @@ public class CustomerController {
 
     @GetMapping("/first")
     public boolean getFirstTimeLogin(@RequestParam String username) {
-        return customerService.getFistTimeLogin(username);
+        System.out.println("First time login" + username);
+        return true;
+//        return customerService.getFistTimeLogin(username);
     }
 
     @GetMapping("/getCustomer")
@@ -42,6 +45,12 @@ public class CustomerController {
     public void postCustomerPreferences(@RequestParam String username, @RequestBody CustomerPreferncesDTO customerPreferncesDTO){
         System.out.println("CUSTOMER PREF START" + username + customerPreferncesDTO);
         customerService.addPreferredGenre(username,customerPreferncesDTO);
+    }
+
+    @PostMapping("/fav")
+    public void postCustomerFavorites(@RequestParam String username, @RequestBody CustomerFavDTO favorites){
+        String fav = favorites.getFavorites();
+        customerService.addPrefences(username, fav);
     }
 
 

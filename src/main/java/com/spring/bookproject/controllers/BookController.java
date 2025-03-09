@@ -41,6 +41,10 @@ public class BookController {
         return bookService.fetchBookById(id);
     }
 
+    @GetMapping("/editor-pick")
+    public void getBooksByEditorPick(@RequestBody List<Long> ids) {
+        System.out.println(ids);
+    }
 
 
     @PostMapping
