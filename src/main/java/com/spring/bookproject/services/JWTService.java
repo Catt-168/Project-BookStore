@@ -26,7 +26,7 @@ public class JWTService {
         this.secretKey = Base64.getEncoder().encodeToString(key.getEncoded());
     }
 
-    public String generateToken(String username) {
+    public String generateToken(String username,long tokenExpTime ) {
         Map<String, Object> claims = new HashMap<String, Object>();
         return Jwts
                 .builder()
@@ -34,7 +34,7 @@ public class JWTService {
                 .add(claims)
                 .subject(username)
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 60 * 60 * 500))
+                .expiration(new Date(System.currentTimeMillis() + tokenExpTime))
                 .and()
                 .signWith(getSecretKey())
                 .compact();
@@ -67,7 +67,7 @@ public class JWTService {
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-    private boolean isTokenExpired(String token) {
+    public boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
