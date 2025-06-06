@@ -117,6 +117,5 @@ The application will typically run on `http://localhost:8080` by default.
 ## Usage
 
 Once the application is running, you can use tools like Postman. Remember to include any necessary authentication tokens for protected endpoints.
-If you are having problems running on your machine, mail to [satpaingthu168@gmail.com]
+If you are having problems running on your machine, mail to [satpaingthu168@gmail.com].
 I am also trying to dockerize the app.
-Thanks!
