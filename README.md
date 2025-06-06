@@ -96,7 +96,7 @@ To get a local copy up and running, follow these simple steps.
     ```
 2.  **Navigate to the project directory:**
     ```bash
-    cd bookstore-project
+    cd project-bookstore
     ```
 3. **Change the DB Config in application.yml as your needs**
 
